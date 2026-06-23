@@ -9,3 +9,15 @@ method : GET
 # use the url from the output of http 1 to download the artifact
 url : {{ $json.export }}  
 
+http 3
+method : POST 
+url : https://api.limacharlie.io/v1/hive/yara/oid/rule_name/data
+header parameter : name : Authorization
+                   value: JWT
+Body content type : Form-URLencoded
+ Name:data
+ value:{{ $json.output }}
+# to activate  the YARA rule 
+ Name:usr_mtd
+ value:{"enabled": true}
+
