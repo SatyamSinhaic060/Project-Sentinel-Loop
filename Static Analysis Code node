@@ -1,0 +1,37 @@
+// 1. Get the items passed from the HTTP node
+const item = $input.item;
+
+// 2. Safely check if a binary property named 'data' exists
+if (!item.binary || !item.binary.data) {
+    return { error: "No binary property named 'data' found. Please verify your HTTP node output field name." };
+}
+
+// 3. Use the older legacy helper method to extract the buffer natively
+const buffer = await this.helpers.getBinaryDataBuffer(0, 'data');
+
+// 4. Convert the buffer stream to a readable text string
+const fileString = buffer.toString('binary');
+
+// 5. Run regex to find printable ASCII text characters (4 characters or longer)
+const asciiRegex = /[\x20-\x7E]{4,}/g;
+const foundStrings = fileString.match(asciiRegex) || [];
+
+// 6. Filter down for our exact targeted threat indicators
+const suspiciousIndicators = foundStrings.filter(str => {
+  const lowerStr = str.toLowerCase();
+  return lowerStr.includes('http') || 
+         lowerStr.includes('system') || 
+         lowerStr.includes('reg') || 
+         lowerStr.includes('.bat') ||
+         lowerStr.includes('.exe');
+});
+
+// 7. Deduplicate the array 
+const uniqueIndicators = [...new Set(suspiciousIndicators)];
+
+// Return clean JSON text arrays
+return {
+  extraction_status: "Success via Legacy Helper",
+  total_strings_found: uniqueIndicators.length,
+  extracted_indicators: uniqueIndicators.slice(0, 50)
+};
