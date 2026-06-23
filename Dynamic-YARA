@@ -1,6 +1,5 @@
 detect
 event: json
-type: point
 op: and
 rules:
   - op: is
@@ -8,7 +7,6 @@ rules:
     value: ext-yara
   - op: matches
     path: event/data/rule_name
-    # This regular expression ensures ANY rule starting exactly with "my-rule" triggers it
     re: ^my-rule
 target: deployment
 
