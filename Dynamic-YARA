@@ -1,0 +1,22 @@
+detect
+op: and
+rules:
+  - op: is
+    path: event/log_type
+    value: pe
+  - not: true
+    op: is
+    path: routing/event_type
+    value: export_complete
+target: artifact_event
+
+response 
+- action: task
+  command: history_isolate
+  suppression:
+    is_global: false
+    keys:
+      - '{{ .routing.sid }}'
+      - yara-isolation-suppression
+    max_count: 1
+    period: 1h
