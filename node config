@@ -1,0 +1,11 @@
+http 1 
+method : GET
+url : https://api.limacharlie.io/v1/insight/oid/artifacts/originals/artifactid
+header parameter : name : Authorization
+                   value: JWT
+
+http 2
+method : GET
+# use the url from the output of http 1 to download the artifact
+url : {{ $json.export }}  
+
