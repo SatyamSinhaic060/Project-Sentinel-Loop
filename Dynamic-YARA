@@ -1,14 +1,16 @@
 detect
+event: json
+type: point
 op: and
 rules:
   - op: is
-    path: event/log_type
-    value: pe
-  - not: true
-    op: is
-    path: routing/event_type
-    value: export_complete
-target: artifact_event
+    path: event/ext_name
+    value: ext-yara
+  - op: matches
+    path: event/data/rule_name
+    # This regular expression ensures ANY rule starting exactly with "my-rule" triggers it
+    re: ^my-rule
+target: deployment
 
 response 
 - action: task
