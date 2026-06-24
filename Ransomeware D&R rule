@@ -116,12 +116,12 @@ response
       sid: '{{ .routing.sid }}'
     method: POST
     url: >-
-      https://red-bell-1896.tines.com/webhook/EDR/b1ab0996bc452094ab62806797141866
+      https://n8n-webhook-url
   suppression:
     is_global: false
     keys:
       - '{{ .routing.sid }}'
-      - tines-webhook-trigger
+      - n8n-webhook-trigger
     max_count: 1
     period: 10m
 - action: task
