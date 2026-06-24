@@ -1,3 +1,4 @@
+// A very basic code for extracting important strings from the artifact 
 // 1. Get the items passed from the HTTP node
 const item = $input.item;
 
