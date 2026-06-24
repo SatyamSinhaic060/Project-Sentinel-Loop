@@ -58,7 +58,7 @@ run --shell-command "C:\Windows\Temp\eicar_ransomware.bat"
 
 ### Rule 1: Ransomware (The Initial Trigger)
 
-Monitors for the telltale signs of native BitLocker policy manipulation or unexpected drop folders (`C:\Windows\Temp\*.bat`) to alert the n8n endpoint and pull the diagnostic file.
+Monitors for the telltale signs of native BitLocker policy manipulation or unexpected drop folders (`C:\Windows\Temp\*.bat`) to alert the n8n endpoint and pull the diagnostic file.If n8n webhook is not able to receive the oid and artifactid then you can configure outputs in LC to send the artifacts details to slack and use slack trigger node in n8n (when new message is received it triggers the workflow).
 
 ### Rule 2: Dynamic-YARA (The Master Containment Hook)
 
